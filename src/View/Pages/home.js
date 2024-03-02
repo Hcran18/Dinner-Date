@@ -4,10 +4,16 @@ import Carousel from 'react-bootstrap/Carousel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
 import './../Styles/home.css';
+import getRestaurants from '../../google-connections/google-api';
 
 const Home = () => {
     const { user, isAuthenticated, isLoading } = useAuth0();
     const [index, setIndex] = useState(0);
+    const [restaurant, setRestaurants] = useState([]);
+    
+    setRestaurants(getRestaurants());
+
+    console.log(restaurant);
 
     const handleNoClick = () => {
         setIndex(index + 1);
