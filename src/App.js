@@ -16,9 +16,11 @@ function App() {
       <Router>
         <Auth0ProviderWithHistory> 
         <Navbar />
-        <Routes>
-          <Route path="/" exact element={<Home />} />
-        </Routes>
+        <div className="main-content">
+          <Routes>
+            <Route path="/" exact element={<Home />} />
+          </Routes>
+        </div>
         </Auth0ProviderWithHistory>
       </Router>
     

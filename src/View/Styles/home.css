@@ -1,0 +1,52 @@
+.home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.welcome-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px; /* Adjust as needed */
+    text-align: center;
+}
+
+.carousel-container {
+    margin-top: 20px; /* Adjust as needed */
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px; /* Adjust as needed */
+}
+
+.round-button {
+    border-radius: 50%;
+    border: none;
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.yes-button {
+    background-color: #4caf50; /* Green color for "Yes" button */
+    color: #fff;
+}
+
+.no-button {
+    background-color: #f44336; /* Red color for "No" button */
+    color: #fff;
+}
+
+.round-button:hover {
+    opacity: 0.8;
+}
