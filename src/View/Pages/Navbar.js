@@ -28,7 +28,7 @@ function Navigation() {
               <Nav.Link href="#home">Home</Nav.Link>
             </Nav>
             {!isLoading && !user && (
-              <Button onClick={() => loginWithRedirect()}>Log in</Button>
+              <Button onClick={handleLoginClick()}>Log in</Button>
             )}
             {!isLoading && user && (
               <Button onClick={() => logout()}>Log out</Button>
