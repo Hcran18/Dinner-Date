@@ -1,4 +1,4 @@
-const User = require('./userModel'); // Import the User model
+const User = require('./UserModel'); // Import the User model
 
 class UserDao {
 
@@ -7,23 +7,12 @@ class UserDao {
         // mongoose.connect('mongodb://localhost:27017/DinnerDate', { useNewUrlParser: true, useUnifiedTopology: true });
     }
 
-    async retrieveUser(username) //retrieve user from database
+    async createUser(user) //add user to database
     {
-        try {
-            const user = await User.findOne({ username });
-            return user; //returns null if username doesn't exist
-        } catch (error) {
-            console.error("Error retrieving user:", error);
-            return null;
-        }
-    }
-
-    async addNewUser(user) //add user to database
-    {
-        if(this.retrieveUser(user.username) != null)
+        if(this.getUserByUsername(user.username) != null)
         {
-            console.error("Username is already in use!");
-            return null;
+            console.error("Username already in use!");
+            throw new Error("Username already in use!");
         }
         try {
             const newUser = new User(user);
@@ -36,21 +25,51 @@ class UserDao {
         }
     }
 
-    async updateUser(user, category, newInfo) //update existing user
+    async getUserByUsername(username)
+    {
+        try{
+            const user = await User.findOne(username)
+            return user;
+        } catch (error) {
+            throw new Error(`Error getting user: ${error.message}`)
+        }
+    }
+
+    async getUserById(userId) //retrieve user from database
     {
         try {
-            //retreive user from database
-            const originalUser = this.retrieveUser(user.username);
-            //set user.category to newInfo
-            originalUser[category] = newInfo;
-            
-            //update user in database
-            const updatedUser = await originalUser.save();
-            return updatedUser;
+            const user = await User.findById(userId);
+            return user;
+        } catch (error) {
+            throw new Error(`Error getting user: ${error.message}`);
         }
-        catch (error) {
-            console.log("Error updating user:", error);
-            return null;
+    }
+
+    async getAllUsers() {
+        try {
+            const users = await User.find();
+            return users;
+        } catch (error) {
+            throw new Error(`Error getting users: ${error.message}`);
+        }
+    }
+
+    async updateUserById(userId, newData) //update existing user
+    {
+        try {
+            const updatedUser = await User.findByIdAndUpdate(userId, newData, { new: true });
+            return updatedUser;
+        } catch (error) {
+            throw new Error(`Error updating user: ${error.message}`);
+        }
+    }
+
+    async deleteUserById(userId) {
+        try {
+            const deletedUser = await User.findByIdAndDelete(userId);
+            return deletedUser;
+        } catch (error) {
+            throw new Error(`Error deleting user: ${error.message}`);
         }
     }
 }
