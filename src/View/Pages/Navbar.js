@@ -6,6 +6,19 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 function Navigation() {
   const {loginWithRedirect, logout, user, isLoading} = useAuth0();
+
+  const handleLoginClick = async () => {
+    try {
+      // Action 1: Perform login and wait until redirection is complete
+      await loginWithRedirect();
+      console.log(user);
+      // const registerHandler = new RegisterHandler();
+      // user = registerHandler.registerUser(user);
+    } catch (error) {
+      console.error("An error occurred during login:", error);
+    }
+  };
+
   return (
     <>
         <Navbar bg="dark" data-bs-theme="dark">
@@ -15,7 +28,7 @@ function Navigation() {
               <Nav.Link href="#home">Home</Nav.Link>
             </Nav>
             {!isLoading && !user && (
-              <Button onClick={() => loginWithRedirect()}>Log in</Button>
+              <Button onClick={handleLoginClick()}>Log in</Button>
             )}
             {!isLoading && user && (
               <Button onClick={() => logout()}>Log out</Button>
