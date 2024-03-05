@@ -28,10 +28,10 @@ function Navigation() {
               <Nav.Link href="#home">Home</Nav.Link>
             </Nav>
             {!isLoading && !user && (
-              <Button onClick={handleLoginClick()}>Log in</Button>
+              <Button onClick={handleLoginClick}>Log in</Button>
             )}
             {!isLoading && user && (
-              <Button onClick={() => logout()}>Log out</Button>
+              <Button onClick={logout}>Log out</Button>
             )}
           </Container>
         </Navbar>
