@@ -4,6 +4,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import Image from 'react-bootstrap/Image';
 import { useAuth0 } from '@auth0/auth0-react';
+import { Outlet, Link } from "react-router-dom";
 
 function Navigation() {
   const {loginWithRedirect, logout, user, isLoading} = useAuth0();
@@ -24,16 +25,16 @@ function Navigation() {
     <>
         <Navbar bg="dark" data-bs-theme="dark">
           <Container>
-            <Navbar.Brand href="/">Dinner Date</Navbar.Brand>
+            <Navbar.Brand as={Link} to="/">Dinner Date</Navbar.Brand>
             <Nav className="me-auto">
-              <Nav.Link href="/">Home</Nav.Link>
+              <Nav.Link as={Link} to="/">Home</Nav.Link>
             </Nav>
             {!isLoading && !user && (
               <Button onClick={handleLoginClick} style={{ backgroundColor: '#B22222', borderColor: '#B22222' }}>Log in</Button>
             )}
             {!isLoading && user && (
               <>
-                <Nav.Link href="/profile">
+                <Nav.Link as={Link} to="/profile">
                   <div style={{paddingLeft: '20px', paddingRight: '20px'}}>
                     <Image src={user.picture} roundedCircle style={{ width: '30px', height: '30px' }}/>
                     <Navbar.Text style={{padding: '5px'}}>
@@ -46,6 +47,8 @@ function Navigation() {
             )}
           </Container>
         </Navbar>
+        
+        <Outlet />
     </>
   );
 }
