@@ -8,21 +8,31 @@ import {
 
 import Home from './View/Pages/home';
 import Navbar from './View/Pages/Navbar';
+import Profile from './View/Pages/profile';
 import Auth0ProviderWithHistory from './auth0Provider';
 
 function App() {
   return (
     
-      <Router>
-        <Auth0ProviderWithHistory> 
-        <Navbar />
-        <div className="main-content">
-          <Routes>
-            <Route path="/" exact element={<Home />} />
-          </Routes>
-        </div>
-        </Auth0ProviderWithHistory>
-      </Router>
+    <Router>
+    <Auth0ProviderWithHistory> 
+      <Routes>
+        {/* Navbar should only be rendered on routes where it's needed */}
+        <Route
+          path="/*"
+          element={
+            <>
+              <Navbar />
+              <Routes>
+                <Route index path="/" element={<Home />} />
+                <Route path="profile" element={<Profile />} />
+              </Routes>
+            </>
+          }
+        />
+      </Routes>
+    </Auth0ProviderWithHistory>
+  </Router>
     
   );
 }

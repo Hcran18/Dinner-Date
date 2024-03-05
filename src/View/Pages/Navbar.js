@@ -2,6 +2,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
+import Image from 'react-bootstrap/Image';
 import { useAuth0 } from '@auth0/auth0-react';
 
 function Navigation() {
@@ -23,15 +24,25 @@ function Navigation() {
     <>
         <Navbar bg="dark" data-bs-theme="dark">
           <Container>
-            <Navbar.Brand href="#home">Dinner Date</Navbar.Brand>
+            <Navbar.Brand href="/">Dinner Date</Navbar.Brand>
             <Nav className="me-auto">
-              <Nav.Link href="#home">Home</Nav.Link>
+              <Nav.Link href="/">Home</Nav.Link>
             </Nav>
             {!isLoading && !user && (
-              <Button onClick={handleLoginClick}>Log in</Button>
+              <Button onClick={handleLoginClick} style={{ backgroundColor: '#B22222', borderColor: '#B22222' }}>Log in</Button>
             )}
             {!isLoading && user && (
-              <Button onClick={logout}>Log out</Button>
+              <>
+                <Nav.Link href="/profile">
+                  <div style={{paddingLeft: '20px', paddingRight: '20px'}}>
+                    <Image src={user.picture} roundedCircle style={{ width: '30px', height: '30px' }}/>
+                    <Navbar.Text style={{padding: '5px'}}>
+                      {user.preferred_username || user.given_name || user.email || "User"}
+                    </Navbar.Text>
+                  </div>
+                </Nav.Link>
+                <Button onClick={logout} style={{ backgroundColor: '#B22222', borderColor: '#B22222' }}>Log out</Button>
+              </>
             )}
           </Container>
         </Navbar>

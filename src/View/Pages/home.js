@@ -16,6 +16,7 @@ const Home = () => {
     const handleYesClick = () => {
         setIndex(index + 1);
     };
+
     return (
         <div className='container'>
             {!isLoading && !isAuthenticated && (
@@ -27,6 +28,7 @@ const Home = () => {
             {isLoading && <p>Loading...</p>}
             {!isLoading && isAuthenticated && (
                 <>
+
                     <div className='welcome-message'>
                         <h3>Welcome, {user.name}!</h3>
                     </div>
@@ -42,7 +44,7 @@ const Home = () => {
                         >
                             <Carousel.Item>
                                 {/*change this image to the next restaurant in the list when buttons are clicked*/}
-                                {/*<ExampleCarouselImage text="First slide" />*/}
+                                {/* <ExampleCarouselImage text="First slide" /> */}
                                 <Carousel.Caption>
                                     {/*update name and Distance when buttons are clicked to new restaurant*/}
                                     <h3>Name</h3>
