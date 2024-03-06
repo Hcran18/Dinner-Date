@@ -3,6 +3,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import Carousel from 'react-bootstrap/Carousel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
+import ReactLogo from './Images/logo-no-background.png';
 import './../Styles/home.css';
 
 const Home = () => {
@@ -21,8 +22,14 @@ const Home = () => {
         <div className='container'>
             {!isLoading && !isAuthenticated && (
                 <div className="home">
-                    <h1>Welcome to Dinner Date!</h1> 
-                    <h2>Log in to get started</h2>
+                    <img 
+                        src={ReactLogo}
+                        width="50%"
+                        className="d-inline-block align-top"
+                        style={{padding: '20px'}}
+                        alt="React Bootstrap logo"
+                    /> 
+                    <h2>Welcome! Log in to get started</h2>
                 </div>
             )}
             {isLoading && <p>Loading...</p>}
