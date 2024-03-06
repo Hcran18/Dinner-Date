@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Image from 'react-bootstrap/Image';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Outlet, Link } from "react-router-dom";
+import ReactLogo from './Images/logo-no-background.png';
 
 function Navigation() {
   const {loginWithRedirect, logout, user, isLoading} = useAuth0();
@@ -25,7 +26,14 @@ function Navigation() {
     <>
         <Navbar bg="dark" data-bs-theme="dark">
           <Container>
-            <Navbar.Brand as={Link} to="/">Dinner Date</Navbar.Brand>
+            <Navbar.Brand as={Link} to="/">
+            <img
+              src={ReactLogo}
+              height="30"
+              className="d-inline-block align-top"
+              alt="React Bootstrap logo"
+            />
+            </Navbar.Brand>
             <Nav className="me-auto">
               <Nav.Link as={Link} to="/">Home</Nav.Link>
             </Nav>
