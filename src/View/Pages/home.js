@@ -24,12 +24,12 @@ const Home = () => {
                 <div className="home">
                     <img 
                         src={ReactLogo}
-                        width="50%"
+                        width="75%"
                         className="d-inline-block align-top"
                         style={{padding: '20px'}}
                         alt="React Bootstrap logo"
                     /> 
-                    <h2>Welcome! Log in to get started</h2>
+                    <h2>Welcome! Log in to get started!</h2>
                 </div>
             )}
             {isLoading && <p>Loading...</p>}
