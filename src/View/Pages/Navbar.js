@@ -6,21 +6,34 @@ import Image from 'react-bootstrap/Image';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Outlet, Link } from "react-router-dom";
 import ReactLogo from './Images/logo-no-background.png';
+import React, { useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import React, { useState } from 'react';
+import axios from 'axios';
+
 
 function Navigation() {
   const {loginWithRedirect, logout, user, isLoading} = useAuth0();
-
-  const handleLoginClick = async () => {
+  const [message, setMessage] = useState('');
+  
+  useEffect(() => {
+    if (!isLoading && user) {
+      authenticateUser(user);
+    }
+  }, [isLoading, user]);
+  
+  const authenticateUser = async (user) => {
     try {
-      // Action 1: Perform login and wait until redirection is complete
-      await loginWithRedirect();
-      console.log(user);
-      // const registerHandler = new RegisterHandler();
-      // user = registerHandler.registerUser(user);
+      const response = await axios.post('/api/authenticate', user);
+      console.log('Server response:', response.data);
     } catch (error) {
-      console.error("An error occurred during login:", error);
+      console.error('Error sending message:', error);
     }
   };
+
+  function popToast(msg){
+    toast(msg);
+  }
 
   return (
     <>
@@ -38,7 +51,7 @@ function Navigation() {
               <Nav.Link as={Link} to="/">Home</Nav.Link>
             </Nav>
             {!isLoading && !user && (
-              <Button onClick={handleLoginClick} style={{ backgroundColor: '#B22222', borderColor: '#B22222' }}>Log in</Button>
+              <Button onClick={loginWithRedirect} style={{ backgroundColor: '#B22222', borderColor: '#B22222' }}>Log in</Button>
             )}
             {!isLoading && user && (
               <>
