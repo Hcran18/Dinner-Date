@@ -9,10 +9,10 @@ class UserDao {
 
     async createUser(user) //add user to database
     {
-        if(this.getUserByUsername(user.username) != null)
+        if(this.getUserByEmail(user.email) != null)
         {
-            console.error("Username already in use!");
-            throw new Error("Username already in use!");
+            console.error("Email already in use!");
+            throw new Error("Email already in use!");
         }
         try {
             const newUser = new User(user);
@@ -25,10 +25,10 @@ class UserDao {
         }
     }
 
-    async getUserByUsername(username)
+    async getUserByEmail(email)
     {
         try{
-            const user = await User.findOne(username)
+            const user = await User.findOne(email)
             return user;
         } catch (error) {
             throw new Error(`Error getting user: ${error.message}`)
