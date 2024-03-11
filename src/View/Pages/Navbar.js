@@ -6,9 +6,8 @@ import Image from 'react-bootstrap/Image';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Outlet, Link } from "react-router-dom";
 import ReactLogo from './Images/logo-no-background.png';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
-import React, { useState } from 'react';
 import axios from 'axios';
 
 
