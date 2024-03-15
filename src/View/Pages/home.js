@@ -4,7 +4,9 @@ import { useAuth0 } from '@auth0/auth0-react';
 import Carousel from 'react-bootstrap/Carousel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
+import ReactLogo from './Images/logo-no-background.png';
 import './../Styles/home.css';
+
 //import getRestaurants from '../../google-connections/google-api';
 
 const Home = () => {
@@ -40,15 +42,15 @@ const Home = () => {
 
     const fetchNearbyRestaurants = async (latitude, longitude) => {
         try {
-            const response = await axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json`, {
+            const response = await axios.get(`http://localhost:3001/nearbysearch`, {
                 params: {
                     location: `${latitude},${longitude}`,
-                    radius: 16000,
+                    radius: 1500,
                     type: 'restaurant',
-                    key: 'AIzaSyCCiruvK10BH-BiTORmTZ6rjEuuiueBN40'
                 }
             });
-
+            
+            console.log('Fetched nearby restaurants data:', response.data.results)
             const data = response.data;
             setRestaurants(data.results);
         } catch (error) {
@@ -73,13 +75,20 @@ const Home = () => {
         <div className='container'>
             {!isLoading && !isAuthenticated && (
                 <div className="home">
-                    <h1>Welcome to Dinner Date!</h1> 
-                    <h2>Log in to get started</h2>
+                    <img 
+                        src={ReactLogo}
+                        width="75%"
+                        className="d-inline-block align-top"
+                        style={{padding: '20px'}}
+                        alt="React Bootstrap logo"
+                    /> 
+                    <h2>Welcome! Log in to get started!</h2>
                 </div>
             )}
             {isLoading && <p>Loading...</p>}
             {!isLoading && isAuthenticated && (
                 <>
+
                     <div className='welcome-message'>
                         <h3>Welcome, {user.name}!</h3>
                     </div>
@@ -93,16 +102,15 @@ const Home = () => {
                             indicators={false}
                             controls={false}
                         >
-                            {restaurants.map((restaurant, idx) => (
-                                <Carousel.Item key={idx}>
-                                    {/*change this image to the next restaurant in the list when buttons are clicked*/}
-                                    {/*<ExampleCarouselImage text="First slide" />*/}
-                                    <Carousel.Caption>
-                                        <h3>{restaurant.name}</h3>
-                                        <p>Distance:</p>
-                                    </Carousel.Caption>
-                                </Carousel.Item>
-                            ))}
+                            <Carousel.Item>
+                                {/*change this image to the next restaurant in the list when buttons are clicked*/}
+                                {/* <ExampleCarouselImage text="First slide" /> */}
+                                <Carousel.Caption>
+                                    {/*update name and Distance when buttons are clicked to new restaurant*/}
+                                    <h3>Name</h3>
+                                    <p>Distance</p>
+                                </Carousel.Caption>
+                            </Carousel.Item>
                         </Carousel>
                     </div>
 
