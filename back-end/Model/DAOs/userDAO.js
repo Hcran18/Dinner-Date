@@ -2,7 +2,7 @@ const User = require('./UserModel'); // Import the User model
 
 class UserDao {
 
-    UserDao(){
+    constructor(){
         // Establish the connection to the database
         // mongoose.connect('mongodb://localhost:27017/DinnerDate', { useNewUrlParser: true, useUnifiedTopology: true });
     }
