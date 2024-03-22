@@ -41,35 +41,102 @@ function Profile() {
     };
 
     return (
-      <div>
-        <h2>Update Info</h2>
+      <div className='profile-info'>
         <input type="text" value={name} onChange={handleNameChange} />
         <input type="email" value={email} onChange={handleEmailChange} />
         <button onClick={handleSubmit}>Save</button>
         <button onClick={onClose}>Cancel</button>
       </div>
     );
-    
   };
 
   // Define UpdatePictureModal
-  const UpdatePictureModal = () => {
-    // Modal content and logic goes here
+  const UpdatePictureModal = ({onClose}) => {
+
+    const [selectedPicture, setSelectedPicture] = useState(null);
+
+    const handlePictureChange = (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setSelectedPicture(reader.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+
+    const handleSavePicture = () => {
+      // Logic to save the selectedPicture as the user's profile picture
+      // You can use APIs or state management libraries to handle this
+    };
+
     return (
-      <div>
-        <h2>Update Picture Modal</h2>
-        {/* Update picture modal content */}
-        <button onClick={() => setShowUpdatePictureModal(false)}>Close Modal</button>
+      <div className='profile-info'>
+        {/* Circle picture as a placeholder */}
+        <div
+          style={{
+            width: '8rem',
+            height: '8rem',
+            border: '2px dashed #ccc',
+            borderRadius: '50%',
+            backgroundImage: `url(${selectedPicture})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            cursor: 'pointer',
+          }}
+          onClick={() => document.getElementById('fileInput').click()}
+        >
+
+          {selectedPicture ? (
+            <img
+              src={selectedPicture}
+              alt='No picture'
+              style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              borderRadius: '50%',
+            }}
+            />
+          ) : (
+            <span className='profile-info'
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              paddingTop: '30px',
+              paddingRight: '50px',
+            }}
+            >Change Picture</span>
+          )}
+
+          {/* File input hidden */}
+          <input
+            type='file'
+            id='fileInput'
+            accept='image/*'
+            style={{ display: 'none' }}
+            onChange={handlePictureChange}
+          />
+        </div>
+        
+        {/* Save button */}
+        <button onClick={handleSavePicture}>Save Picture</button>
+  
+        {/* Close button */}
+        <button onClick={onClose}>Cancel</button>
       </div>
     );
+    
   };
   
   // Define ProfilePicture Component
-  const ProfilePicture = ({image, onUpdateClick}) => {
+  const ProfilePicture = ({image, onClick}) => {
     return (
       <div className='profile-picture'>
         <Image src={image} alt="Profile" roundedCircle style={{ width: '8rem', height: '8rem' }}/>
-        <button onClick={onUpdateClick}>Change Profile Picture</button>
+        <button onClick={onClick}>Change Profile Picture</button>
       </div>
     );
   };
@@ -97,18 +164,18 @@ function Profile() {
       <ProfileInfo
       name={user.name}
       email={user.email}
-      onUpdateClick={handleInfoUpdateClick}
+      onClick={handleInfoUpdateClick}
       />
       {showUpdateInfoModal && (
         <UpdateInfoModal
+        user={user}
         onClose={() => setShowUpdateInfoModal(false)}
-        userData={userData}
         />
       )}
       {showUpdatePictureModal && (
         <UpdatePictureModal
+        currentImage={user.picture}
         onClose={() => setShowUpdatePictureModal(false)}
-        currentImageUrl={userData.profilePictureUrl}
         />
       )}
     </div>
