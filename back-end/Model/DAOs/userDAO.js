@@ -1,4 +1,4 @@
-const User = require('./UserModel'); // Import the User model
+const User = require('./UserModel');  
 
 class UserDao {
 
