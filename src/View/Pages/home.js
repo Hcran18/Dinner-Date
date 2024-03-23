@@ -14,8 +14,7 @@ const Home = () => {
   const [noList, setNoList] = useState([]);
   const [yesList, setYesList] = useState([]);
   const [index, setIndex] = useState(0);
-  const [userLocation, setUserLocation] = useState(null);
-  const [restaurants, setRestaurants] = useState([]);
+  let restaurants = [];
 
   //Use the google nearby search api to get a list of restaurants
   useEffect(() => {
@@ -28,7 +27,6 @@ const Home = () => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          setUserLocation({ latitude, longitude });
           fetchNearbyRestaurants(latitude, longitude);
         },
         (error) => {
@@ -42,6 +40,7 @@ const Home = () => {
 
   const fetchNearbyRestaurants = async (latitude, longitude) => {
     try {
+      console.log("lat and long: ", latitude, longitude);
       const response = await axios.get(`http://localhost:3177/nearbysearch`, {
         params: {
           location: `${latitude},${longitude}`,
@@ -50,14 +49,13 @@ const Home = () => {
         },
       });
 
-      console.log("Fetched nearby restaurants data:", response.data.results);
       const data = response.data;
-      setRestaurants(data.results);
+      if (data.results.length !== 0) {
+        restaurants = data.results;
+      }
     } catch (error) {
       console.error("Error fetching nearby restaurants:", error);
     }
-
-    console.log("Fetched nearby restaurants data:", restaurants);
   };
 
   // handle the clicks of the buttons
@@ -88,6 +86,7 @@ const Home = () => {
       {isLoading && <p>Loading...</p>}
       {!isLoading && isAuthenticated && (
         <>
+          {console.log("data:", restaurants)}
           <div className="welcome-message">
             <h3>Welcome, {user.name}!</h3>
           </div>
@@ -101,15 +100,15 @@ const Home = () => {
               indicators={false}
               controls={false}
             >
-              <Carousel.Item>
-                {/*change this image to the next restaurant in the list when buttons are clicked*/}
-                {/* <ExampleCarouselImage text="First slide" /> */}
-                <Carousel.Caption>
-                  {/*update name and Distance when buttons are clicked to new restaurant*/}
-                  <h3>Name</h3>
-                  <p>Distance</p>
-                </Carousel.Caption>
-              </Carousel.Item>
+              {restaurants.map((restaurant, idx) => (
+                <Carousel.Item key={idx}>
+                  <h2>Image</h2>
+                  <Carousel.Caption>
+                    <h3>{restaurant.name}</h3>
+                    <p>{restaurant.vicinity}</p>
+                  </Carousel.Caption>
+                </Carousel.Item>
+              ))}
             </Carousel>
           </div>
 
