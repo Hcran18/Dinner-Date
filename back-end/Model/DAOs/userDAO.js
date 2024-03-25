@@ -1,42 +1,36 @@
-const User = require('./UserModel');  
+const User = require('./userModel');  
 
-class UserDao {
-
-    UserDao(){
-        // Establish the connection to the database
-        // mongoose.connect('mongodb://localhost:27017/DinnerDate', { useNewUrlParser: true, useUnifiedTopology: true });
-    }
-
-    async createUser(user) //add user to database
-    {
-        if(this.getUserByEmail(user.email) != null)
-        {
-            console.error("Email already in use!");
-            throw new Error("Email already in use!");
-        }
+class UserDao { 
+    async getUserByEmail(email) {
         try {
-            const newUser = new User(user);
-            const savedUser = await newUser.save;
-            return savedUser;
-        }
-        catch (error) {
-            console.error("Error saving new user:", error);
-            return null;
-        }
-    }
-
-    async getUserByEmail(email)
-    {
-        try{
-            const user = await User.findOne(email)
+            const user = await User.findOne({ email });
             return user;
         } catch (error) {
-            throw new Error(`Error getting user: ${error.message}`)
+            console.error(`Error getting user by email: ${error.message}`);
+            throw new Error(`Error getting user by email: ${error.message}`);
         }
-    }
+    }  
 
-    async getUserById(userId) //retrieve user from database
+    async createUser(user) //add user to database 
     {
+        console.log("Received user data:", user);
+        
+        const newUser = new User({
+            user_id: user.user_id,
+            email: user.email,
+            name: user.name
+        });
+ 
+        newUser.save()
+        .then(item => {
+            console.log('Item inserted successfully:', item);
+        })
+        .catch(err => {
+            console.error('Error inserting item:', err);
+        }); 
+    } 
+
+    async getUserById(userId) {
         try {
             const user = await User.findById(userId);
             return user;
@@ -54,7 +48,7 @@ class UserDao {
         }
     }
 
-    async updateUserById(userId, newData) //update existing user
+    async updateUser(userId, newData)  
     {
         try {
             const updatedUser = await User.findByIdAndUpdate(userId, newData, { new: true });
@@ -64,7 +58,7 @@ class UserDao {
         }
     }
 
-    async deleteUserById(userId) {
+    async deleteUser(userId) {
         try {
             const deletedUser = await User.findByIdAndDelete(userId);
             return deletedUser;
