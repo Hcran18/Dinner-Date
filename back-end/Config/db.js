@@ -1,11 +1,14 @@
 const mongoose = require('mongoose');
- 
-mongoose.connect('mongodb://localhost:27017/DinnerDate', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => {
-    console.log('MongoDB connected');
-}).catch(err => {
-    console.error('MongoDB connection error:', err);
-});
- 
+const colors = require('colors');
+
+const connectDB = async () => {
+    try {
+        const conn = await mongoose.connect(process.env.MONGO_URI)
+        console.log(`Mongo DB Connected ${conn.connection.host}`.cyan.underline)
+    } catch (error) {
+        console.log(error)
+        process.exit(1)
+    }
+}
+
+module.exports = connectDB 
