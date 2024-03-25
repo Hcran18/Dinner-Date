@@ -1,0 +1,17 @@
+.profile-picture {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 50px;
+    font-size: larger;
+    margin-bottom: 50px;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 50px;
+    font-size: larger;
+    padding-bottom: 50px;
+}
