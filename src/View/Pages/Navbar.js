@@ -44,49 +44,31 @@ function Navigation() {
               className="d-inline-block align-top"
               alt="React Bootstrap logo"
             />
-          </Navbar.Brand>
-          <Nav className="me-auto">
-            <Nav.Link as={Link} to="/">
-              Home
-            </Nav.Link>
-          </Nav>
-          {!isLoading && !user && (
-            <Button
-              onClick={loginWithRedirect}
-              style={{ backgroundColor: "#B22222", borderColor: "#B22222" }}
-            >
-              Log in
-            </Button>
-          )}
-          {!isLoading && user && (
-            <>
-              <Nav.Link as={Link} to="/profile">
-                <div style={{ paddingLeft: "20px", paddingRight: "20px" }}>
-                  <Image
-                    src={user.picture}
-                    roundedCircle
-                    style={{ width: "30px", height: "30px" }}
-                  />
-                  <Navbar.Text style={{ padding: "5px" }}>
-                    {user.preferred_username ||
-                      user.given_name ||
-                      user.email ||
-                      "User"}
-                  </Navbar.Text>
-                </div>
-              </Nav.Link>
-              <Button
-                onClick={logout}
-                style={{ backgroundColor: "#B22222", borderColor: "#B22222" }}
-              >
-                Log out
-              </Button>
-            </>
-          )}
-        </Container>
-      </Navbar>
-
-      <Outlet />
+            </Navbar.Brand>
+            <Nav className="me-auto">
+              <Nav.Link as={Link} to="/">Home</Nav.Link>
+              {/* <Nav.Link as={Link} to="/profile">Profile</Nav.Link> */}
+            </Nav>
+            {!isLoading && !user && (
+              <Button onClick={loginWithRedirect} style={{ backgroundColor: '#B22222', borderColor: '#B22222' }}>Log in</Button>
+            )}
+            {!isLoading && user && (
+              <>
+                <Nav.Link as={Link} to="/profile">
+                  <div style={{paddingLeft: '20px', paddingRight: '20px'}}>
+                    <Image src={user.picture} roundedCircle style={{ width: '30px', height: '30px' }}/>
+                    <Navbar.Text style={{padding: '5px'}}>
+                      {user.preferred_username || user.given_name || user.email || "User"}
+                    </Navbar.Text>
+                  </div>
+                </Nav.Link>
+                <Button onClick={logout} style={{ backgroundColor: '#B22222', borderColor: '#B22222' }}>Log out</Button>
+              </>
+            )}
+          </Container>
+        </Navbar>
+        
+        <Outlet />
     </>
   );
 }
