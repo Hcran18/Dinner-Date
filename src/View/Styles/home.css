@@ -29,7 +29,7 @@
     border-radius: 50%;
     border: none;
     padding: 10px;
-    margin: 5px;
+    margin: 10px;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -38,11 +38,13 @@
 }
 
 .yes-button {
+    font-size: 3vw;
     background-color: #4caf50; /* Green color for "Yes" button */
     color: #fff;
 }
 
 .no-button {
+    font-size: 3vw;
     background-color: #f44336; /* Red color for "No" button */
     color: #fff;
 }

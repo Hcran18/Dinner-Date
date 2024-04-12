@@ -5,10 +5,10 @@ import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Outlet, Link } from "react-router-dom";
-import ReactLogo from './Images/logo-no-background.png';
-import React, { useEffect, useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import axios from 'axios';
+import ReactLogo from "./Images/logo-no-background.png";
+import React, { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
 
 function Navigation() {
   const { loginWithRedirect, logout, user, isLoading } = useAuth0();
@@ -44,31 +44,56 @@ function Navigation() {
               className="d-inline-block align-top"
               alt="React Bootstrap logo"
             />
-            </Navbar.Brand>
-            <Nav className="me-auto">
-              <Nav.Link as={Link} to="/">Home</Nav.Link>
-              {/* <Nav.Link as={Link} to="/profile">Profile</Nav.Link> */}
-            </Nav>
-            {!isLoading && !user && (
-              <Button onClick={loginWithRedirect} style={{ backgroundColor: '#B22222', borderColor: '#B22222' }}>Log in</Button>
-            )}
+          </Navbar.Brand>
+          <Nav className="me-auto">
+            <Nav.Link as={Link} to="/">
+              Home
+            </Nav.Link>
             {!isLoading && user && (
               <>
-                <Nav.Link as={Link} to="/profile">
-                  <div style={{paddingLeft: '20px', paddingRight: '20px'}}>
-                    <Image src={user.picture} roundedCircle style={{ width: '30px', height: '30px' }}/>
-                    <Navbar.Text style={{padding: '5px'}}>
-                      {user.preferred_username || user.given_name || user.email || "User"}
-                    </Navbar.Text>
-                  </div>
+                <Nav.Link as={Link} to="/swiping">
+                  Swiping
                 </Nav.Link>
-                <Button onClick={logout} style={{ backgroundColor: '#B22222', borderColor: '#B22222' }}>Log out</Button>
               </>
             )}
-          </Container>
-        </Navbar>
-        
-        <Outlet />
+          </Nav>
+          {!isLoading && !user && (
+            <Button
+              onClick={loginWithRedirect}
+              style={{ backgroundColor: "#B22222", borderColor: "#B22222" }}
+            >
+              Log in
+            </Button>
+          )}
+          {!isLoading && user && (
+            <>
+              <Nav.Link as={Link} to="/profile">
+                <div style={{ paddingLeft: "20px", paddingRight: "20px" }}>
+                  <Image
+                    src={user.picture}
+                    roundedCircle
+                    style={{ width: "30px", height: "30px" }}
+                  />
+                  <Navbar.Text style={{ padding: "5px" }}>
+                    {user.preferred_username ||
+                      user.given_name ||
+                      user.email ||
+                      "User"}
+                  </Navbar.Text>
+                </div>
+              </Nav.Link>
+              <Button
+                onClick={logout}
+                style={{ backgroundColor: "#B22222", borderColor: "#B22222" }}
+              >
+                Log out
+              </Button>
+            </>
+          )}
+        </Container>
+      </Navbar>
+
+      <Outlet />
     </>
   );
 }

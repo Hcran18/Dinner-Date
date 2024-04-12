@@ -28,6 +28,7 @@ app.use(
 );
 
 app.get("/nearbysearch", async (req, res) => {
+  console.log("Fetching nearby restaurants...");
   try {
     const response = await axios.get(
       "https://maps.googleapis.com/maps/api/place/nearbysearch/json",
@@ -39,7 +40,10 @@ app.get("/nearbysearch", async (req, res) => {
           key: API_KEY_VALUE,
         },
       }
+
     );
+
+    console.log(response.data);
 
     res.json(response.data);
   } catch (error) {
