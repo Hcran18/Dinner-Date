@@ -4,7 +4,6 @@ import SwipingContainer from "./SwipingContainer";
 const Activity = () => {
   return (
     <div>
-      <h1>Activity</h1>
       <SwipingContainer />
     </div>
   );
