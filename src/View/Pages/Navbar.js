@@ -6,13 +6,11 @@ import Image from "react-bootstrap/Image";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Outlet, Link } from "react-router-dom";
 import ReactLogo from "./Images/logo-no-background.png";
-import React, { useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import React, { useEffect } from "react";
 import axios from "axios";
 
 function Navigation() {
   const { loginWithRedirect, logout, user, isLoading } = useAuth0();
-  const [message, setMessage] = useState("");
 
   useEffect(() => {
     if (!isLoading && user) {
@@ -29,10 +27,6 @@ function Navigation() {
     }
   };
 
-  function popToast(msg) {
-    toast(msg);
-  }
-
   return (
     <>
       <Navbar bg="dark" data-bs-theme="dark">
@@ -46,13 +40,14 @@ function Navigation() {
             />
           </Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link as={Link} to="/">
-              Home
-            </Nav.Link>
+            
             {!isLoading && user && (
               <>
+                <Nav.Link as={Link} to="/">
+                  Home
+                </Nav.Link>
                 <Nav.Link as={Link} to="/swiping">
-                  Swiping
+                  Matching
                 </Nav.Link>
               </>
             )}

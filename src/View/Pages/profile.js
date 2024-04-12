@@ -2,7 +2,6 @@ import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useState } from 'react';
 import Image from 'react-bootstrap/Image';
-import { type } from '@testing-library/user-event/dist/type';
 import "./../Styles/profile.css"
 
 function Profile() {
@@ -91,7 +90,7 @@ function Profile() {
           {selectedPicture ? (
             <img
               src={selectedPicture}
-              alt='No picture'
+              alt='Profile'
               style={{
               width: '100%',
               height: '100%',
